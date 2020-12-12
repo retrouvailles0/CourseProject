@@ -1,4 +1,5 @@
 import pandas as pd
+import joblib
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.svm import SVC
@@ -16,29 +17,7 @@ import time
 from selenium import webdriver 
 from selenium.webdriver.chrome.options import Options
 import nltk
-
-
-def stratified_k_fold():
-    data = pd.read_csv("all_data.csv",sep=',')
-    content_data = data['text'].values.astype('U')
-
-    y = data['label'].values
-    skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=None)
-    scores = []
-    for train_indices, test_indices in skf.split(content_data, y):
-        X_train = [content_data[li] for li in train_indices]
-        Y_train = [y[li] for li in train_indices]
-        X_test = [content_data[li] for li in test_indices]
-        Y_test = [y[li] for li in test_indices]
-   
-        pipeline.fit(X_train, Y_train)
-        score = pipeline.score(X_test, Y_test)
-        scores.append(score)
-        predictions = pipeline.predict(X_test)
-        print(confusion_matrix(Y_test, predictions))
-    score = sum(scores) / len(scores)
-    print("StratifiedKFold Cross Validation Score - Using 5 folds")
-    print(score)
+import random
 
 df = pd.read_csv("all_data.csv", sep=',')
 train,test = train_test_split(df,train_size=0.80)
@@ -61,4 +40,36 @@ x_test_matrix = vectorizer.transform(test_data['text'].values.astype('U'))
 pipeline = Pipeline([
   ('count_vectorizer', CountVectorizer(ngram_range=(1, 2))),
   ('classifier', SGDClassifier())])
-stratified_k_fold()
+
+data = pd.read_csv("all_data.csv",sep=',')
+content_data = data['text'].values.astype('U')
+
+y = data['label'].values
+
+indices = list(range(len(y)))
+test_indices = []
+train_indices = []
+positive = [idx for idx in indices if y[idx] == 1]
+negative = [idx for idx in indices if y[idx] == 0]
+random.shuffle(positive)
+random.shuffle(negative)
+test_indices += positive[:int(0.2 * len(positive))]
+test_indices += negative[:int(0.2 * len(negative))]
+train_indices += positive[int(0.2 * len(positive)):]
+train_indices += negative[int(0.2 * len(negative)):]
+X_train = [content_data[li] for li in train_indices]
+Y_train = [y[li] for li in train_indices]
+X_test = [content_data[li] for li in test_indices]
+Y_test = [y[li] for li in test_indices]
+
+pipeline.fit(X_train, Y_train)
+joblib.dump(pipeline, 'model.sav')
+model = joblib.load('model.sav')
+score = model.score(X_test, Y_test)
+print(score)
+
+# predictions = pipeline.predict(X_test)
+# print(confusion_matrix(Y_test, predictions))
+# score = sum(scores) / len(scores)
+# print("StratifiedKFold Cross Validation Score - Using 5 folds")
+# print(score)
