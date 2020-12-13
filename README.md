@@ -37,3 +37,15 @@ Rui Liu(ruiliu7@illinois.edu) \
     + Linear
         - SGDClassifier
 * Save model (joblib)
+
+## Run
+The code was tested using Python 3.7.
+
+* Train the model
+```angular2html
+python3 select_model.py
+```
+* Predict a URL
+```angular2html
+python3 predict.py
+```
