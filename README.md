@@ -1,4 +1,4 @@
-# CourseProject
+# Course Project
 
 ## Introduction
 This repo is for CS410 course project option 2.2 Expert Search System. \
@@ -10,7 +10,7 @@ When the user enters a URL, the saved model will be retrieved and a result will 
 
 ## Author
 Zhenzhou Yang(zy29@illinois.edu) \
-Rui Liu(ruiliu7@illinois.edu) \
+Rui Liu(ruiliu7@illinois.edu)
 
 
 ## Dataset
