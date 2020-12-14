@@ -18,6 +18,7 @@ Rui Liu(ruiliu7@illinois.edu)
 * Positive datasets 
   are the faculty web pages given by students used for mp2.1 (​https://docs.google.com/spreadsheets/d/198HqeztqhCHbCbcLeuOmoynnA3Z68cVx ixU5vvMuUaM/edit#gid=0​). The data is saved in positive_link.csv
 * Negative datasets are non-directory web pages we collected online. The data is saved in negative_info.csv
+* Positive/Negative Ratio 3:1
 
 
 ## Method
