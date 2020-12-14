@@ -56,3 +56,6 @@ python3 select_model.py
 ```angular2html
 python3 predict.py
 ```
+
+## Demo
+https://uofi.box.com/s/apzzkkdm40upm5rvkh3qpg8sob23o4a8
