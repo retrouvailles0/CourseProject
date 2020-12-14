@@ -40,6 +40,10 @@ Rui Liu(ruiliu7@illinois.edu)
     + Adaptive Boosting
         - AdaBoostClassifier
 * Save model (joblib)
+* User interface (tkinker)
+
+![Yes](yes.png)
+![No](no.png)
 
 ## Run
 The code was tested using Python 3.7.
