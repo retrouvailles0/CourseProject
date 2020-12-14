@@ -16,13 +16,18 @@ model = joblib.load('model.sav')
 options = Options()
 options.headless = True
 driver = webdriver.Chrome('/usr/local/bin/chromedriver',options=options)
-
-print("Enter URL:")
-url = str(input())
-driver.get(url)
-res_html = driver.execute_script('return document.body.innerHTML')
-soup = BeautifulSoup(res_html,'html.parser')
-textlines = [line.strip() for line in soup.get_text().splitlines() if len(line.strip()) > 0]
-chunk = [phrase for line in textlines for phrase in line.split()]
-whole_text = ' '.join(chunk)
-print(model.predict([whole_text]))
+while True:
+    print("Enter URL:")
+    url = str(input())
+    if url == 'exit':
+        break
+    driver.get(url)
+    res_html = driver.execute_script('return document.body.innerHTML')
+    soup = BeautifulSoup(res_html,'html.parser')
+    textlines = [line.strip() for line in soup.get_text().splitlines() if len(line.strip()) > 0]
+    chunk = [phrase for line in textlines for phrase in line.split()]
+    whole_text = ' '.join(chunk)
+    if (model.predict([whole_text])[0] == 1):
+        print("yes")
+    else:
+        print("no")

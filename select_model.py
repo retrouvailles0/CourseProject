@@ -40,6 +40,10 @@ y_train_matrix = train_data['label'].values
 y_test_matrix = test_data['label'].values
 x_test_matrix = vectorizer.transform(test_data['text'].values.astype('U'))
 
+X_train = train_data['text'].values.astype('U')
+Y_train = train_data['label'].values
+X_test = test_data['text'].values.astype('U')
+Y_test = test_data['label'].values
 models = [SVC(), LinearSVC(), MultinomialNB(), DecisionTreeClassifier(), SGDClassifier(), AdaBoostClassifier()]
 
 max_score = 0
@@ -52,39 +56,11 @@ def create_pipeline(model):
         ('count_vectorizer', CountVectorizer(ngram_range=(1, 2))),
         ('classifier', model)])
     pp.fit(X_train, Y_train)
-    joblib.dump(pp, 'model.sav')
-    model = joblib.load('model.sav')
-    score = model.score(X_test, Y_test)
+    score = pp.score(X_test, Y_test)
     print(score)
     if (score > max_score):
         max_score = score
         pipeline = pp
-
-
-# data = pd.read_csv("all_data.csv",sep=',')
-# content_data = data['text'].values.astype('U')
-
-# y = data['label'].values
-
-# indices = list(range(len(y)))
-# test_indices = []
-# train_indices = []
-# positive = [idx for idx in indices if y[idx] == 1]
-# negative = [idx for idx in indices if y[idx] == 0]
-# random.shuffle(positive)
-# random.shuffle(negative)
-# test_indices += positive[:int(0.2 * len(positive))]
-# test_indices += negative[:int(0.2 * len(negative))]
-# train_indices += positive[int(0.2 * len(positive)):]
-# train_indices += negative[int(0.2 * len(negative)):]
-# X_train = [content_data[li] for li in train_indices]
-# Y_train = [y[li] for li in train_indices]
-# X_test = [content_data[li] for li in test_indices]
-# Y_test = [y[li] for li in test_indices]
-X_train = train_data['text'].values.astype('U')
-Y_train = train_data['label'].values
-X_test = test_data['text'].values.astype('U')
-Y_test = test_data['label'].values
 
 for model in models:
     create_pipeline(model)
@@ -92,8 +68,3 @@ print("Model with highest score: ")
 print(pipeline)
 
 joblib.dump(pipeline, 'model.sav')
-# predictions = pipeline.predict(X_test)
-# print(confusion_matrix(Y_test, predictions))
-# score = sum(scores) / len(scores)
-# print("StratifiedKFold Cross Validation Score - Using 5 folds")
-# print(score)

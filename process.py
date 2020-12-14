@@ -65,14 +65,9 @@ X_train = train_data['text'].values.astype('U')
 Y_train = train_data['label'].values
 X_test = test_data['text'].values.astype('U')
 Y_test = test_data['label'].values
-pipeline.fit(X_train, Y_train)
-joblib.dump(pipeline, 'model.sav')
-model = joblib.load('model.sav')
-score = model.score(X_test, Y_test)
-print(score)
-
-# predictions = pipeline.predict(X_test)
-# print(confusion_matrix(Y_test, predictions))
-# score = sum(scores) / len(scores)
-# print("StratifiedKFold Cross Validation Score - Using 5 folds")
+# pipeline.fit(X_train, Y_train)
+# joblib.dump(pipeline, 'model.sav')
+# model = joblib.load('model.sav')
+# score = model.score(X_test, Y_test)
 # print(score)
+
