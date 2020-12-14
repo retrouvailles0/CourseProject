@@ -37,7 +37,7 @@ Rui Liu(ruiliu7@illinois.edu)
         - RandomForestClassifier
     + Linear
         - SGDClassifier
-    + Ensemble
+    + Adaptive Boosting
         - AdaBoostClassifier
 * Save model (joblib)
 
